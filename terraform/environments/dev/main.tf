@@ -17,6 +17,26 @@ module "s3" {
   project = var.project
 }
 
+module "iam" {
+  source  = "../../modules/iam"
+  env     = var.env
+  project = var.project
+}
+
+module "kms" {
+  source      = "../../modules/kms"
+  env         = var.env
+  project     = var.project
+  alert_email = var.alert_email
+}
+
+module "sns" {
+  source      = "../../modules/sns"
+  env         = var.env
+  project     = var.project
+  alert_email = var.alert_email
+}
+
 variable "env" {
   default = "dev"
 }
@@ -24,8 +44,7 @@ variable "env" {
 variable "project" {
   default = "fintech"
 }
-module "iam" {
-  source  = "../../modules/iam"
-  env     = var.env
-  project = var.project
+
+variable "alert_email" {
+  default = "babudataarch@gmail.com"
 }
