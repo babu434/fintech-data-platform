@@ -24,3 +24,8 @@ variable "env" {
 variable "project" {
   default = "fintech"
 }
+module "iam" {
+  source  = "../../modules/iam"
+  env     = var.env
+  project = var.project
+}
