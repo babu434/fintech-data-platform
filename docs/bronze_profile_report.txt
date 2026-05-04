@@ -1,0 +1,136 @@
+BRONZE LAYER DATA PROFILING REPORT
+Generated: 2026-05-04 06:23:44
+Bucket: s3://fintech-bronze-dev
+
+
+### 1. TRANSACTIONS ###
+
+==================================================
+PROFILE: TRANSACTIONS
+==================================================
+Rows:     70,000
+Columns:  12
+
+Column Details:
+--------------------------------------------------
+transaction_id            | nulls: 0.0% | unique:70000 | sample: 944f08cf-9517-42c6-b
+customer_id               | nulls: 0.0% | unique:  500 | sample: CUST0075
+amount                    | nulls: 0.0% | unique:66254 | min:     10.46 | max:  74248.76 | mean:   3872.37
+merchant                  | nulls: 0.0% | unique:   12 | sample: Flipkart
+category                  | nulls: 0.0% | unique:    6 | sample: ecommerce
+timestamp                 | nulls: 0.0% | unique: 8632 | sample: 2026-04-26 23:29:35
+transaction_date          | nulls: 0.0% | unique:    7 | sample: 2026-04-26
+device_id                 | nulls: 0.0% | unique: 7000 | sample: 52b6c4c5-77a8-4529-9
+location_lat              | nulls: 0.0% | unique:62367 | min:      7.51 | max:     37.49 | mean:     22.48
+location_lng              | nulls: 0.0% | unique:62157 | min:     67.54 | max:     97.47 | mean:     82.38
+is_fraud                  | nulls: 0.0% | unique:    2 | min:      0.00 | max:      1.00 | mean:      0.05
+currency                  | nulls: 0.0% | unique:    1 | sample: INR
+
+Duplicates on transaction_id: 0
+OK: No duplicates found
+
+Fraud Distribution:
+  NORMAL: 66,500 (95.0%)
+  FRAUD: 3,500 (5.0%)
+
+
+### 2. CUSTOMERS ###
+
+==================================================
+PROFILE: CUSTOMERS
+==================================================
+Rows:     500
+Columns:  14
+
+Column Details:
+--------------------------------------------------
+customer_id               | nulls: 0.0% | unique:  500 | sample: CUST0000
+name                      | nulls: 0.0% | unique:  500 | sample: Gautam Raj
+email                     | nulls: 0.0% | unique:  500 | sample: amrita75@example.org
+phone                     | nulls: 0.0% | unique:  500 | sample: 07923797500
+address                   | nulls: 0.0% | unique:  500 | sample: 27, Mall Nagar Kadap
+city                      | nulls: 0.0% | unique:  252 | sample: Bhilai
+state                     | nulls: 0.0% | unique:   28 | sample: Jharkhand
+pincode                   | nulls: 0.0% | unique:  500 | sample: 108502
+signup_date               | nulls: 0.0% | unique:  395 | sample: 2026-04-01
+avg_spend                 | nulls: 0.0% | unique:  500 | min:    108.37 | max:   4994.47 | mean:   2547.03
+home_lat                  | nulls: 0.0% | unique:  497 | min:      8.03 | max:     37.00 | mean:     22.70
+home_lng                  | nulls: 0.0% | unique:  499 | min:     68.00 | max:     96.94 | mean:     82.52
+device_id                 | nulls: 0.0% | unique:  500 | sample: 8c87036d-39f8-497a-8
+is_active                 | nulls: 0.0% | unique:    2 | min:      0.00 | max:      1.00 | mean:      0.76
+
+Duplicates on customer_id: 0
+OK: No duplicates found
+
+
+### 3. KYC ###
+
+==================================================
+PROFILE: KYC
+==================================================
+Rows:     500
+Columns:  7
+
+Column Details:
+--------------------------------------------------
+customer_id               | nulls: 0.0% | unique:  500 | sample: CUST0000
+kyc_status                | nulls: 0.0% | unique:    3 | sample: PENDING
+risk_tier                 | nulls: 0.0% | unique:    3 | sample: LOW
+pan_verified              | nulls: 0.0% | unique:    2 | sample: True
+aadhar_verified           | nulls: 0.0% | unique:    2 | sample: True
+kyc_date                  | nulls: 0.0% | unique:  359 | sample: 2025-09-24
+kyc_expiry                | nulls: 0.0% | unique:  394 | sample: 2027-03-30
+
+Duplicates on customer_id: 0
+OK: No duplicates found
+
+KYC Status Distribution:
+  VERIFIED: 347 (69.4%)
+  PENDING: 99 (19.8%)
+  REJECTED: 54 (10.8%)
+
+Risk Tier Distribution:
+  LOW: 300 (60.0%)
+  MEDIUM: 154 (30.8%)
+  HIGH: 46 (9.2%)
+
+
+### 4. SUPPORT TICKETS ###
+
+==================================================
+PROFILE: SUPPORT TICKETS
+==================================================
+Rows:     569
+Columns:  7
+
+Column Details:
+--------------------------------------------------
+ticket_id                 | nulls: 0.0% | unique:  569 | sample: f241a251-be95-49c4-8
+customer_id               | nulls: 0.0% | unique:  304 | sample: CUST0000
+category                  | nulls: 0.0% | unique:    5 | sample: transaction_dispute
+status                    | nulls: 0.0% | unique:    3 | sample: PENDING
+priority                  | nulls: 0.0% | unique:    3 | sample: MEDIUM
+created_date              | nulls: 0.0% | unique:  281 | sample: 2025-08-22
+description               | nulls: 0.0% | unique:  569 | sample: Impedit sapiente rem
+
+Duplicates on ticket_id: 0
+OK: No duplicates found
+
+Ticket Category Distribution:
+  transaction_dispute: 129 (22.7%)
+  account_blocked: 121 (21.3%)
+  refund_request: 112 (19.7%)
+  payment_failed: 109 (19.2%)
+  fraud_report: 98 (17.2%)
+
+
+### BRONZE LAYER SUMMARY ###
+==================================================
+Transactions:    70,000 rows
+Customers:       500 rows
+KYC records:     500 rows
+Support tickets: 569 rows
+Total rows:      71,569
+
+Bronze layer verification COMPLETE
+Ready for Silver ETL pipeline!
