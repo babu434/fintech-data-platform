@@ -44,6 +44,14 @@ module "vpc" {
   vpc_cidr = "10.0.0.0/16"
 }
 
+module "glue" {
+  source        = "../../modules/glue"
+  env           = var.env
+  project       = var.project
+  glue_role_arn = "arn:aws:iam::512584596315:role/fintech-glue-role-dev"
+  bronze_bucket = "fintech-bronze-dev"
+}
+
 variable "env" {
   default = "dev"
 }
