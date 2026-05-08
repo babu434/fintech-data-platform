@@ -147,3 +147,37 @@ resource "aws_glue_crawler" "support_tickets" {
     Project     = var.project
   }
 }
+resource "aws_glue_job" "bronze_to_silver" {
+  name         = "${var.project}-bronze-to-silver-${var.env}"
+  role_arn     = var.glue_role_arn
+  glue_version = "4.0"
+
+  command {
+    name            = "glueetl"
+    script_location = "s3://${var.bronze_bucket}/scripts/bronze_to_silver.py"
+    python_version  = "3"
+  }
+
+  default_arguments = {
+    "--job-language"            = "python"
+    "--enable-metrics"          = "true"
+    "--enable-job-insights"     = "true"
+    "--enable-glue-datacatalog" = "true"
+    "--datalake-formats"        = "delta"
+    "--TempDir"                 = "s3://${var.bronze_bucket}/temp/"
+    "--conf"                    = "spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension --conf spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog"
+  }
+
+  execution_property {
+    max_concurrent_runs = 1
+  }
+
+  number_of_workers = 5
+  worker_type       = "G.1X"
+  timeout           = 60
+
+  tags = {
+    Environment = var.env
+    Project     = var.project
+  }
+}
