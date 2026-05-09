@@ -58,6 +58,15 @@ module "athena" {
   results_bucket = "fintech-athena-results-dev"
 }
 
+module "lake_formation" {
+  source        = "../../modules/lake_formation"
+  env           = var.env
+  project       = var.project
+  account_id    = "512584596315"
+  glue_role_arn = "arn:aws:iam::512584596315:role/fintech-glue-role-dev"
+}
+
+
 variable "env" {
   default = "dev"
 }
