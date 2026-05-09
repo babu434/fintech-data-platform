@@ -51,6 +51,12 @@ module "glue" {
   glue_role_arn = "arn:aws:iam::512584596315:role/fintech-glue-role-dev"
   bronze_bucket = "fintech-bronze-dev"
 }
+module "athena" {
+  source         = "../../modules/athena"
+  env            = var.env
+  project        = var.project
+  results_bucket = "fintech-athena-results-dev"
+}
 
 variable "env" {
   default = "dev"
