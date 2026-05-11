@@ -215,3 +215,37 @@ resource "aws_glue_job" "silver_to_gold" {
     Project     = var.project
   }
 }
+resource "aws_glue_job" "gdpr_batch_deletion" {
+  name         = "${var.project}-gdpr-batch-deletion-${var.env}"
+  role_arn     = var.glue_role_arn
+  glue_version = "4.0"
+
+  command {
+    name            = "glueetl"
+    script_location = "s3://${var.bronze_bucket}/scripts/gdpr_batch_deletion.py"
+    python_version  = "3"
+  }
+
+  default_arguments = {
+    "--job-language"              = "python"
+    "--enable-metrics"            = "true"
+    "--enable-job-insights"       = "true"
+    "--datalake-formats"          = "delta"
+    "--TempDir"                   = "s3://${var.bronze_bucket}/temp/"
+    "--conf"                      = "spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension --conf spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog"
+    "--additional-python-modules" = "boto3"
+  }
+
+  execution_property {
+    max_concurrent_runs = 1
+  }
+
+  number_of_workers = 5
+  worker_type       = "G.1X"
+  timeout           = 60
+
+  tags = {
+    Environment = var.env
+    Project     = var.project
+  }
+}
