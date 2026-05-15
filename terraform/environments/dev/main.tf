@@ -65,6 +65,12 @@ module "lake_formation" {
   account_id    = "512584596315"
   glue_role_arn = "arn:aws:iam::512584596315:role/fintech-glue-role-dev"
 }
+module "kinesis" {
+  source      = "../../modules/kinesis"
+  env         = var.env
+  project     = var.project
+  shard_count = 1
+}
 
 
 variable "env" {
